@@ -1,15 +1,18 @@
 import streamlit as st
-import time
 from translator import translate
 from translator import format_language
 
-# add a progress bar https://docs.streamlit.io/library/api-reference/status/st.progress (need to import time)
+st.set_page_config(
+    page_title="Translation App",
+    page_icon="🪄",
+    menu_items={
+        'About': "Created by Eleni Kaltsouni."
+    }
+)
 
-st.title("Translation app")
+st.title("Translate your text")
 st.write("")
-# user input text area with empty value
-input_text = st.text_area("Enter your text below", value="", height=None, max_chars=None, key=None, help=None, on_change=None, args=None, kwargs=None, placeholder=None, disabled=False, label_visibility="visible")
-st.write("")
+
 st.write("Choose your languages")
 st.write("")
 
@@ -44,6 +47,9 @@ option_to = st.selectbox(
     'to:',
     translate_to)
 st.write("")
+
+# user input text area with empty value
+input_text = st.text_area("Enter your text below", value="", height=None, max_chars=None, key=None, help=None, on_change=None, args=None, kwargs=None, placeholder=None, disabled=False, label_visibility="visible")
 button = st.button('Translate')
 
 # progress bar
@@ -51,15 +57,7 @@ if button:
     # output text generation by calling the translate method along with its parameters
     output_text = translate(input_lang=format_language(option_from), input_text=input_text,
                             output_lang=format_language(option_to))
-    # # Add a placeholder
-    # latest_iteration = st.empty()
-    # bar = st.progress(0)
-    # for i in range(100):
-    #
-    # # Update the progress bar with each iteration
-    #     latest_iteration.text('Translating...')
-    #     bar.progress(i + 1)
-    #     time.sleep(0.02)
+
     st.write("")
 
     # text area with value the translated text
